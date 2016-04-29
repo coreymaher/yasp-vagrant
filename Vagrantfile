@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
       v.memory = 2048
     end
 
-    config.vm.network "forwarded_port", guest: 80, host: 8080
+    config.vm.network "forwarded_port", guest: 5000, host: 8080
     config.vm.network "public_network"
 
     config.vm.provision "shell", path: "provision.sh"
@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
         d.pull_images "cassandra:latest"
 
         d.run "yasp/yasp",
-            args: "-v '/home/yasp:/usr/src/yasp' --net=host -e FRONTEND_PORT=80 -e ROLE=web --name yasp"
+            args: "-v '/home/yasp:/usr/src/yasp' -di --net=host --name yasp"
 
         d.run "postgres",
             args: "--net=host"
